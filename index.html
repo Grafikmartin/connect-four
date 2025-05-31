@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Connect Four</title>
+    <link rel="stylesheet" href="style.css" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600&display=swap" rel="stylesheet">
+
+
+  </head>
+
+  <body>
+    <div class="top-bar">
+        <a href="help.html" id="help-link" class="material-icons" style="text-decoration: none; color: white;">help_outline</a>
+        <button id="fullscreen-toggle" class="material-icons">fullscreen</button>
+        <button id="sound-toggle" class="material-icons">volume_up</button>
+    </div>
+      
+      <div class="hintergrund" id="background"></div>
+    <h1>Connect Four</h1>
+  
+    <div>
+      <div id="game-board"></div>
+    </div>
+
+    <div class="info">
+      <p id="status">Player (Circle), it's your turn!</p>
+      <button class="neuesSpiel" onclick="resetGame()">New Game</button>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

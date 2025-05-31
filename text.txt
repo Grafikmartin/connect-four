@@ -1,0 +1,97 @@
+function placeDisc(cell, color) {
+    const disc = document.createElement("div");
+    disc.classList.add("disc", color);
+    cell.appendChild(disc);
+}
+
+function computerMove() {
+    let col = findBestMove();
+    let row = dropDisc(col);
+
+    const cell = document.querySelector(`.cell[data-row="${row}"][data-col="${col}"]`);
+    placeDisc(cell, currentPlayer);
+    board[row][col] = currentPlayer;
+
+    if (checkWin(row, col)) {
+        statusText.textContent = "Der Computer (Gelb) hat gewonnen!";
+        return;
+    }
+
+    currentPlayer = "red";
+    statusText.textContent = "Spieler (Rot) ist dran!";
+    gameBoard.addEventListener("click", handlePlayerMove);
+}
+
+function findBestMove() {
+    // 1. Gewinnzug setzen, wenn möglich
+    for (let col = 0; col < COLS; col++) {
+        const row = dropDisc(col);
+        if (row !== null) {
+            board[row][col] = "yellow";
+            if (checkWin(row, col)) {
+                board[row][col] = null;
+                return col; // Gewinnzug
+            }
+            board[row][col] = null;
+        }
+    }
+
+    // 2. Verhindern, dass Spieler gewinnt (horizontal, vertikal)
+    for (let col = 0; col < COLS; col++) {
+        const row = dropDisc(col);
+        if (row !== null) {
+            board[row][col] = "red";
+            if (checkWin(row, col)) {
+                board[row][col] = null;
+                return col; // Blockiere Sieg
+            }
+            board[row][col] = null;
+        }
+    }
+
+    // 3. Blockiere vertikale Bedrohungen (drei übereinander)
+    for (let col = 0; col < COLS; col++) {
+        for (let row = 2; row < ROWS; row++) {
+            if (
+                board[row][col] === "red" &&
+                board[row - 1][col] === "red" &&
+                board[row - 2][col] === "red" &&
+                board[row - 3][col] === null
+            ) {
+                return col; // Setze den Stein direkt über die drei roten Steine
+            }
+        }
+    }
+
+    // 4. Blockiere horizontale Bedrohungen (zwei nebeneinander)
+    for (let row = ROWS - 1; row >= 0; row--) {
+        for (let col = 0; col < COLS - 2; col++) {
+            if (
+                board[row][col] === "red" &&
+                board[row][col + 1] === "red"
+            ) {
+                // Blockiere rechts
+                if (col + 2 < COLS && board[row][col + 2] === null && dropDisc(col + 2) === row) {
+                    return col + 2;
+                }
+                // Blockiere links
+                if (col - 1 >= 0 && board[row][col - 1] === null && dropDisc(col - 1) === row) {
+                    return col - 1;
+                }
+            }
+        }
+    }
+
+    // 5. Spalten in der Mitte bevorzugen
+    const middle = Math.floor(COLS / 2);
+    if (dropDisc(middle) !== null) {
+        return middle;
+    }
+
+    // 6. Zufällige Spalte
+    let randomCol;
+    do {
+        randomCol = Math.floor(Math.random() * COLS);
+    } while (dropDisc(randomCol) === null);
+    return randomCol;
+}
