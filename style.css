@@ -320,7 +320,7 @@ body {
   justify-content: center;
   align-items: center;
   z-index: 300;
-  color: white;
+  color: #7fff00;
   font-family: 'Press Start 2P', monospace;
   overflow-y: auto;
   background: #101c11;
@@ -355,7 +355,7 @@ body {
   font-size: 1rem;
   animation: growText 5s ease-in-out forwards;
   line-height: 1.2;
-  color: white;
+  color: #7fff00;
   text-shadow: none;
   white-space: nowrap;
   font-family: 'Press Start 2P', monospace;
