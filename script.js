@@ -48,14 +48,14 @@ function handlePlayerMove(e) {
     board[row][col] = currentPlayer;
 
     if (checkWin(row, col)) {
-        statusText.textContent = `Spieler (Kreis) hat gewonnen!`;
+        statusText.textContent = `Player (Circle) won!`;
         playSound('win');
         gameBoard.removeEventListener("click", handlePlayerMove);
         return;
     }
 
     currentPlayer = "yellow";
-    statusText.textContent = "Computer (Kreuz) ist dran...";
+    statusText.textContent = "Computer (Cross)'s turn...";
     gameBoard.removeEventListener("click", handlePlayerMove);
 
     setTimeout(computerMove, 500);
@@ -101,13 +101,13 @@ function computerMove() {
     board[row][col] = currentPlayer;
 
     if (checkWin(row, col)) {
-        statusText.textContent = "Der Computer (Kreuz) hat gewonnen!";
+        statusText.textContent = "The Computer (Cross) won!";
         playSound('lose');
         return;
     }
 
     currentPlayer = "red";
-    statusText.textContent = "Spieler (Kreis) ist dran!";
+    statusText.textContent = "Player (Circle)'s turn!";
     gameBoard.addEventListener("click", handlePlayerMove);
 }
 

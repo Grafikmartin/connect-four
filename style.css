@@ -74,7 +74,7 @@ body {
 
 h1 {
   text-align: center;
-  color: white;
+  color: #7fff00;
   font-size: 2.5rem;
   margin-top: 72px;
   font-family: 'Press Start 2P', monospace;
@@ -166,7 +166,7 @@ h1 {
 .info {
   margin-top: 10px;
   text-align: center;
-  color: white;
+  color: #7fff00;
   font-family: 'Press Start 2P', monospace;
 }
 
@@ -246,7 +246,7 @@ button:hover {
 
 .winner-text {
   font-size: 48px;
-  color: white;
+  color: #7fff00;
   position: absolute;
   top: 50%;
   left: 50%;
