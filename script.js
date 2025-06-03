@@ -211,13 +211,45 @@ function findBestMove() {
         }
     }
 
-    // 6. Spalten in der Mitte bevorzugen
+    // 6. Verhindere, dass der Spieler direkt über einem Kreuz einen Vierer machen kann
+    let safeCols = [];
+    for (let col = 0; col < COLS; col++) {
+        let row = dropDisc(col);
+        if (row !== null) {
+            // Simuliere Computerzug
+            board[row][col] = "yellow";
+            // Prüfe, ob Spieler im nächsten Zug direkt darüber gewinnen kann
+            let nextRow = row - 1;
+            let isSafe = true;
+            if (nextRow >= 0) {
+                board[nextRow][col] = "red";
+                if (checkWin(nextRow, col)) {
+                    isSafe = false;
+                }
+                board[nextRow][col] = null;
+            }
+            board[row][col] = null;
+            if (isSafe) {
+                safeCols.push(col);
+            }
+        }
+    }
+    if (safeCols.length > 0) {
+        // Wähle eine sichere Spalte (bevorzugt Mitte)
+        const middle = Math.floor(COLS / 2);
+        if (safeCols.includes(middle)) {
+            return middle;
+        }
+        return safeCols[Math.floor(Math.random() * safeCols.length)];
+    }
+
+    // 7. Spalten in der Mitte bevorzugen
     const middle = Math.floor(COLS / 2);
     if (dropDisc(middle) !== null) {
         return middle;
     }
 
-    // 7. Zufällige Spalte
+    // 8. Zufällige Spalte
     let randomCol;
     do {
         randomCol = Math.floor(Math.random() * COLS);
