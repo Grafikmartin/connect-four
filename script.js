@@ -171,13 +171,53 @@ function findBestMove() {
         }
     }
 
-    // 5. Spalten in der Mitte bevorzugen
+    // 5. Blockiere diagonale Bedrohungen (drei in einer Diagonale)
+    // Diagonal rechts unten (/)
+    for (let row = 3; row < ROWS; row++) {
+        for (let col = 0; col < COLS - 3; col++) {
+            if (
+                board[row][col] === "red" &&
+                board[row - 1][col + 1] === "red" &&
+                board[row - 2][col + 2] === "red"
+            ) {
+                // Prüfe Feld oben rechts
+                if (row - 3 >= 0 && col + 3 < COLS && board[row - 3][col + 3] === null && (row - 3 === ROWS - 1 || board[row - 2][col + 3] !== null)) {
+                    return col + 3;
+                }
+                // Prüfe Feld unten links
+                if (row + 1 < ROWS && col - 1 >= 0 && board[row + 1][col - 1] === null && (row + 1 === ROWS - 1 || board[row][col - 1] !== null)) {
+                    return col - 1;
+                }
+            }
+        }
+    }
+    // Diagonal links unten (\)
+    for (let row = 3; row < ROWS; row++) {
+        for (let col = 3; col < COLS; col++) {
+            if (
+                board[row][col] === "red" &&
+                board[row - 1][col - 1] === "red" &&
+                board[row - 2][col - 2] === "red"
+            ) {
+                // Prüfe Feld oben links
+                if (row - 3 >= 0 && col - 3 >= 0 && board[row - 3][col - 3] === null && (row - 3 === ROWS - 1 || board[row - 2][col - 3] !== null)) {
+                    return col - 3;
+                }
+                // Prüfe Feld unten rechts
+                if (row + 1 < ROWS && col + 1 < COLS && board[row + 1][col + 1] === null && (row + 1 === ROWS - 1 || board[row][col + 1] !== null)) {
+                    return col + 1;
+                }
+            }
+        }
+    }
+
+    // 6. Spalten in der Mitte bevorzugen
     const middle = Math.floor(COLS / 2);
     if (dropDisc(middle) !== null) {
         return middle;
     }
 
-    // 6. Zufällige Spalte
+    // 7. Zufällige Spalte
     let randomCol;
     do {
         randomCol = Math.floor(Math.random() * COLS);
