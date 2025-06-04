@@ -143,9 +143,9 @@ function findBestMove() {
         for (let row = 2; row < ROWS; row++) {
             if (
                 board[row][col] === "red" &&
-                board[row - 1][col] === "red" &&
-                board[row - 2][col] === "red" &&
-                board[row - 3][col] === null
+                row - 1 >= 0 && board[row - 1][col] === "red" &&
+                row - 2 >= 0 && board[row - 2][col] === "red" &&
+                row - 3 >= 0 && board[row - 3][col] === null
             ) {
                 return col; // Setze den Stein direkt über die drei roten Steine
             }
@@ -177,8 +177,8 @@ function findBestMove() {
         for (let col = 0; col < COLS - 3; col++) {
             if (
                 board[row][col] === "red" &&
-                board[row - 1][col + 1] === "red" &&
-                board[row - 2][col + 2] === "red"
+                row - 1 >= 0 && col + 1 < COLS && board[row - 1][col + 1] === "red" &&
+                row - 2 >= 0 && col + 2 < COLS && board[row - 2][col + 2] === "red"
             ) {
                 // Prüfe Feld oben rechts
                 if (row - 3 >= 0 && col + 3 < COLS && board[row - 3][col + 3] === null && (row - 3 === ROWS - 1 || board[row - 2][col + 3] !== null)) {
@@ -196,8 +196,8 @@ function findBestMove() {
         for (let col = 3; col < COLS; col++) {
             if (
                 board[row][col] === "red" &&
-                board[row - 1][col - 1] === "red" &&
-                board[row - 2][col - 2] === "red"
+                row - 1 >= 0 && col - 1 >= 0 && board[row - 1][col - 1] === "red" &&
+                row - 2 >= 0 && col - 2 >= 0 && board[row - 2][col - 2] === "red"
             ) {
                 // Prüfe Feld oben links
                 if (row - 3 >= 0 && col - 3 >= 0 && board[row - 3][col - 3] === null && (row - 3 === ROWS - 1 || board[row - 2][col - 3] !== null)) {
